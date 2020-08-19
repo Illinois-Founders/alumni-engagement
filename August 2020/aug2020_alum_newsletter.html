@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no"> <!-- Tell iOS not to automatically link certain text strings. -->
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
+    <!-- Web Font / @font-face : BEGIN -->
+    <!-- NOTE: If web fonts are not required, lines 23 - 41 can be safely removed. -->
+
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+    <!--[if mso]>
+        <style>
+            * {
+                font-family: sans-serif !important;
+            }
+        </style>
+    <![endif]-->
+
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+    <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
+
+    <!-- Web Font / @font-face : END -->
+
+    <!-- CSS Reset : BEGIN -->
+    <style>
+
+        /* What it does: Tells the email client that only light styles are provided but the client can transform them to dark. A duplicate of meta color-scheme meta tag above. */
+        :root {
+          color-scheme: light;
+          supported-color-schemes: light;
+        }
+
+        /* What it does: Remove spaces around the email design added by some email clients. */
+        /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        /* What it does: Stops email clients resizing small text. */
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* What it does: Centers email on Android 4.4 */
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+        }
+
+        /* What it does: forces Samsung Android mail clients to use the entire viewport */
+        #MessageViewBody, #MessageWebViewDiv{
+            width: 100% !important;
+        }
+
+        /* What it does: Stops Outlook from adding extra spacing to tables. */
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+
+        /* What it does: Replaces default bold style. */
+        th {
+        	font-weight: normal;
+        }
+
+        /* What it does: Fixes webkit padding issue. */
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+
+        /* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+        a {
+            text-decoration: none;
+        }
+
+        /* What it does: Uses a better rendering method when resizing images in IE. */
+        img {
+            -ms-interpolation-mode:bicubic;
+        }
+
+        /* What it does: A work-around for email clients meddling in triggered links. */
+        a[x-apple-data-detectors],  /* iOS */
+        .unstyle-auto-detected-links a,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* What it does: Prevents Gmail from changing the text color in conversation threads. */
+        .im {
+            color: inherit !important;
+        }
+
+        /* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+        .a6S {
+           display: none !important;
+           opacity: 0.01 !important;
+		}
+		/* If the above doesn't work, add a .g-img class to any image in question. */
+		img.g-img + div {
+		   display: none !important;
+		}
+
+        /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+        /* Create one of these media queries for each additional viewport size you'd like to fix */
+
+        /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+        @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+            u ~ div .email-container {
+                min-width: 320px !important;
+            }
+        }
+        /* iPhone 6, 6S, 7, 8, and X */
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+            u ~ div .email-container {
+                min-width: 375px !important;
+            }
+        }
+        /* iPhone 6+, 7+, and 8+ */
+        @media only screen and (min-device-width: 414px) {
+            u ~ div .email-container {
+                min-width: 414px !important;
+            }
+        }
+
+    </style>
+    <!-- CSS Reset : END -->
+
+    <!-- Progressive Enhancements : BEGIN -->
+    <style>
+
+        /* What it does: Hover styles for buttons */
+        .button-td,
+        .button-a {
+            transition: all 100ms ease-in;
+        }
+	    .button-td-primary:hover,
+	    .button-a-primary:hover {
+	        background: #555555 !important;
+	        border-color: #555555 !important;
+	    }
+
+        /* Media Queries */
+        @media screen and (max-width: 600px) {
+
+            .email-container {
+                width: 100% !important;
+                margin: auto !important;
+            }
+
+            /* What it does: Forces table cells into full-width rows. */
+            .stack-column,
+            .stack-column-center {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                direction: ltr !important;
+            }
+            /* And center justify these ones. */
+            .stack-column-center {
+                text-align: center !important;
+            }
+
+            /* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+            .center-on-narrow {
+                text-align: center !important;
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                float: none !important;
+            }
+            table.center-on-narrow {
+                display: inline-block !important;
+            }
+
+            /* What it does: Adjust typography on small screens to improve readability */
+            .email-container p {
+                font-size: 17px !important;
+            }
+        }
+
+    </style>
+    <!-- Progressive Enhancements : END -->
+
+</head>
+<!--
+	The email background color (#222222) is defined in three places:
+	1. body tag: for most email clients
+	2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
+	3. mso conditional: For Windows 10 Mail
+-->
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #222222;">
+  <center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: #222222;">
+    <!--[if mso | IE]>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #222222;">
+    <tr>
+    <td>
+    <![endif]-->
+
+        <!-- Visually Hidden Preheader Text : BEGIN -->
+        <div style="max-height:0; overflow:hidden; mso-hide:all;" aria-hidden="true">
+            (Optional) This text will appear in the inbox preview, but not the email body. It can be used to supplement the email subject line or even summarize the email's contents. Extended text preheaders (~490 characters) seems like a better UX for anyone using a screenreader or voice-command apps like Siri to dictate the contents of an email. If this text is not included, email clients will automatically populate it using the text (including image alt text) at the start of the email's body.
+        </div>
+        <!-- Visually Hidden Preheader Text : END -->
+
+        <!-- Create white space after the desired preview text so email clients don’t pull other distracting text into the inbox preview. Extend as necessary. -->
+        <!-- Preview Text Spacing Hack : BEGIN -->
+        <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+        </div>
+        <!-- Preview Text Spacing Hack : END -->
+
+        <!-- Email Body : BEGIN -->
+        <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
+	        <!-- Email Header : BEGIN -->
+            <tr>
+                <td style="padding: 20px 0; text-align: center">
+					<a href="http://founders.illinois.edu/" style="text-decoration: none;"><img src="https://mcusercontent.com/61d1dc68f7de6828a17db2174/images/24d2ab9d-c914-4825-9326-55048460d065.png" width="200" height="50" alt="alt_text" border="0" style="height: auto; background: #dddddd00; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                </td>
+            </tr>
+	        <!-- Email Header : END -->
+
+			<!-- Hero Image, Flush : BEGIN -->
+			<tr>
+				<!-- Bulletproof Background Images c/o https://backgrounds.cm -->
+				<td style="text-align: center; background-image: url('https://66.media.tumblr.com/7654776391fe6630a5d50e6c96be02d7/c4678083490332ab-d9/s400x600/754ef7159c6e66a4072af5e172abca14c58848ff.gifv'); background-color: #222222; background-position: center center !important; background-size: cover !important;">
+					<!--[if gte mso 9]>
+					<v:image xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; width: 680px; height: 180px;" src="https://via.placeholder.com/680x180/222222/666666" />
+					<v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="border: 0; display: inline-block; position: absolute; width: 680px; height: 180px;">
+					<v:fill opacity="0%" color="#222222" />
+					<![endif]-->
+					<div>
+						<!--[if mso]>
+						<table align="center" role="presentation" border="0" cellspacing="0" cellpadding="0" width="500">
+						<tr>
+						<td width="500">
+						<![endif]-->
+						<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:500px; margin: auto;">
+							<tr>
+								<td style="text-align: center; padding: 40px 0px; font-family: arial narrow; font-size: 15px; line-height: 20px; color: #ececec; font-stretch: extra-condensed; letter-spacing: 3px; font-weight: bold;">
+									<img src="https://github.com/Illinois-Founders/alumni-engagement/blob/master/Default%20Template/Images/Official%20Founders%20Logo.png?raw=true" width="600" height="" alt="alt_text" border="0" style="width: 100%; max-width: 600px; height: 100%; max-height: 180px; background: #dddddd00; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555; margin: auto; display: block;" class="g-img">
+									<p style="margin: 0;">FOUNDERS IS THE UIUC ENTREPRENEURSHIP COMMUNITY</p>
+								</td>
+							</tr>
+						</table>
+						<!--[if mso]>
+						</td>
+						</tr>
+						</table>
+						<![endif]-->
+					</div>
+					<!--[if gte mso 9]>
+					</v:fill>
+					</v:rect>
+					</v:image>
+					<![endif]-->
+				</td>
+			</tr>
+			<!-- Hero Image, Flush : END -->
+			
+			<!-- Title with Date : BEGIN -->
+            <tr>
+                <!-- Bulletproof Background Images c/o https://backgrounds.cm -->
+                <td valign="middle" style="text-align: center; background-color: #222222; background-position: center center !important; background-size: cover !important;">
+	                <!--[if gte mso 9]>
+	                <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:175px; background-position: center center !important;">
+	                <v:fill type="tile" src="https://via.placeholder.com/600x230/222222/666666" color="#222222" />
+	                <v:textbox inset="0,0,0,0">
+	                <![endif]-->
+	                <div>
+	                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+	                        <tr>
+	                            <!-- <td valign="middle" style="text-align: center; padding: 40px; font-family: Georgia; font-size: 20px; line-height: 18px; color: #ffffff;">
+	                                <p style="margin: 0;">June Edition 2020</p>
+								</td> -->
+								<td style="padding: 50px; font-family: Georgia; font-size: 15px; line-height: 20px; color: #b9b9b9; font-style: italic; text-align: center;">
+									<h1 style="margin: 0 0 10px; font-size: 25px; line-height: 30px; color: #eeeeee; font-weight: bold; font-style: normal;">Monthly Digest</h1>
+									<p style="margin: 0 0 10px;">August 2020 Edition</p>
+								</td>
+	                    </table>
+	                </div>
+	                <!--[if gte mso 9]>
+	                </v:textbox>
+	                </v:rect>
+	                <![endif]-->
+	            </td>
+	        </tr>
+	        <!-- Title with Date : END -->
+
+			<!-- Intro : BEGIN -->
+			<tr>
+                <td style="background-color: #f89620;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+						<tr>
+                            <td style="padding: 40px; font-family: Arial; font-size: 15px; line-height: 20px; color: #ffffff;">
+                                <p style="margin: 0 0 10px;">This newsletter consists of:</p>
+                                <ul style="padding: 0; margin: 0; list-style-type: disc;">
+									<li style="margin:0 0 10px 20px;" class="list-item-first">Unveiling our new Founders Mentorship Program</li>
+									<li style="margin:0 0 10px 20px;">Official Founders charitable donation platform</li>
+									<li style="margin: 0 0 0 20px;" class="list-item-last">Upcoming fall events and dates to mark your calendars</li>
+								</ul>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Intro + Button : END -->
+            
+            <!-- Clear Spacer : BEGIN -->
+	        <tr>
+	            <td aria-hidden="true" height="40" style="font-size: 0px; line-height: 0px;">
+	                &nbsp;
+	            </td>
+	        </tr>
+            <!-- Clear Spacer : END -->
+            
+            <!-- Photos and Buttons : START -->
+			<tr>
+                <td style="background-color: #ffffff;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                            <td style="padding: 20px; font-family: Arial; font-size: 15px; line-height: 20px; color: #555555;">
+                                <h1 style="margin: 30px 0 0; font-size: 25px; line-height: 30px; color: #333333; font-weight: bold;">
+                                    <!--Founders Logo arrow : START-->
+                                    <img src="https://github.com/Illinois-Founders/alumni-engagement/blob/master/Default%20Template/Images/arrow2.png?raw=true" width="35" height="30" alt="alt_text" border="0" align="center" class="g-img?" style="margin-bottom: 5px;">
+                                    <!--Founders Logo arrow : END-->
+                                    Mentorship and Charitable Contributions</h1>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Thumbnail 1, Text 1 : BEGIN -->
+            <tr>
+                <td dir="ltr" width="100%" style="padding: 10px; background-color: #ffffff;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <!-- Column : BEGIN -->
+                            <th width="33.33%" class="stack-column-center">
+                                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td dir="ltr" valign="top" style="padding: 0 10px;">
+                                            <img src="Images/mentorship.png" width="170" height="170" alt="alt_text" border="0" class="center-on-narrow" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </th>
+                            <!-- Column : END -->
+                            <!-- Column : BEGIN -->
+                            <th width="66.66%" class="stack-column-center">
+                                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td dir="ltr" valign="top" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 10px; text-align: left;" class="center-on-narrow">
+                                            <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">Mentorship Program</h2>
+                                            <p style="margin: 0 0 10px 0;">We are excited to launch our first-ever Founders mentorship program! As alumni, you all have profound expertise to share with our current Founders members. Please fill out the following form so we can best match your skills to our members! We hope this program can be the genesis for strong connections between Founders alumni and current members.</p>
+                                            <!-- Button : BEGIN -->
+                                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="center-on-narrow" style="float:left;">
+                                                <tr>
+                                                    <td class="button-td button-td-primary" style="border-radius: 4px; background: #f89620;">
+                                                        <a class="button-a button-a-primary" href="https://forms.gle/D1sSAK7qSWyy3d2b8" style="background: #f89620; border: 0px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">Mentorship Survey</a>
+                                                    </td>
+                                            </tr>
+                                        </table>
+                                        <!-- Button : END -->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </th>
+                            <!-- Column : END -->
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Thumbnail 1, Text 1 : END -->
+
+            <!-- Thumbnail 2, Text 2 : BEGIN -->
+            <tr>
+                <td dir="rtl" width="100%" style="padding: 10px; background-color: #ffffff;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <!-- Column : BEGIN -->
+                            <th width="33.33%" class="stack-column-center">
+                                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td dir="ltr" valign="top" style="padding: 0 10px;">
+                                            <img src="Images/alumni_logo.png" width="170" height="170" alt="alt_text" border="0" class="center-on-narrow" style="height: auto; background: #ffffff; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </th>
+                            <!-- Column : END -->
+                            <!-- Column : BEGIN -->
+                            <th width="66.66%" class="stack-column-center">
+                                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td dir="ltr" valign="top" style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555; padding: 10px; text-align: left;" class="center-on-narrow">
+                                            <h2 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333; font-weight: bold;">Charitable Contributions</h2>
+                                            <p style="margin: 0 0 10px 0;">Founders is the premier student-run entrepreneurship nonprofit of UIUC. We are now proud to accept tax-deductable donations that support the programs we have been growing since 2013. We could not have reached this point without the dedication of you, our alumni, throughout the years. If you are able, please consider contributing to the success of our fall events and microgrant program through our donation platform.</p>
+                                            <!-- Button : BEGIN -->
+                                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="center-on-narrow" style="float:left;">
+                                                <tr>
+                                                    <td class="button-td button-td-primary" style="border-radius: 4px; background: #222222;">
+                                                        <a class="button-a button-a-primary" href="https://donorbox.org/founders-donations-1-1" style="background: #222222; border: 1px solid #000000; font-family: sans-serif; font-size: 15px; line-height: 15px; text-decoration: none; padding: 13px 17px; color: #ffffff; display: block; border-radius: 4px;">Make a Contribution</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <!-- Button : END -->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </th>
+                            <!-- Column : END -->
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- Thumbnail 2, Text 2 : END -->
+            <!-- Photos and Buttons : END -->
+
+            <!-- 3 Photos Columns : BEGIN -->
+			<tr>
+                <td style="background-color: #e2841900;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+						<tr>
+                            <td style="padding: 20px; font-family: Arial; font-size: 15px; line-height: 20px; color: #555555;">
+								<h1 style="margin: 30px 0 0; font-size: 25px; line-height: 30px; color: #eeeeee; font-weight: bold;">
+									<!--Founders Logo arrow : START-->
+									<img src="https://github.com/Illinois-Founders/alumni-engagement/blob/master/Default%20Template/Images/Arrow.png?raw=true" width="35" height="30" alt="alt_text" border="0" align="center" class="g-img?" style="margin-bottom: 5px;">
+									<!--Founders Logo arrow : END-->
+                                    Founders Fall Programming</h1>
+                                <h2 style="margin: 30px 0 0; font-size: 20px; color: #eeeeee; text-align: center;">All Founders fall events will be 100% virtual this year due to COVID-19. Below are the dates of each event and a traditional description of what the event stands for.</h2>
+                            </td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+	        <tr>
+	            <td style="padding: 10px; background-color: #ffffff00;">
+	                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+	                    <tr>
+	                        <!-- Column 1 : BEGIN -->
+	                        <th valign="top" width="33.33%" class="stack-column-center">
+	                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+	                                <tr>
+	                                    <td style="padding: 10px; text-align: center">
+	                                        <a href="http://founders.illinois.edu/startupbootcamp/"><img src="Images/startup_bootcamp.png" width="170" height="" alt="alt_text" border="0" style="width: 100%; max-width: 170px; height: auto; background: #FFFFFF; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;"></a>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+                                        <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #b8b8b8; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                            <p style="margin: 20; text-align: center; font-style: italic;">Startup Bootcamp</p>
+                                            <p style="margin: 20; font-weight: bold; text-align: center;">Sept 14 - Nov 6</p>
+	                                        <p style="margin: 20; text-align: center;">"Startup Bootcamp is an 8-week workshop series designed to lay the groundwork for student entrepreneurial succeess. Lectures will be delivered by leading university faculty and successful members of the entrepreneurship community."</p>
+	                                    </td>
+	                                </tr>
+	                            </table>
+	                        </th>
+	                        <!-- Column 1 : END -->
+	                        <!-- Column 2 : BEGIN -->
+	                        <th valign="top" width="33.33%" class="stack-column-center">
+	                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+	                                <tr>
+	                                    <td style="padding: 10px; text-align: center">
+	                                        <a href="http://54.io//"><img src="Images/54.png" width="170" height="" alt="alt_text" border="0" style="width: 100%; max-width: 170px; max-height: 200px; height: auto; background: #FFFFFF; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;"></a>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+	                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #b8b8b8; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                            <p style="margin: 20; text-align: center; font-style: italic;">54 Startup Weekend</p>
+                                            <p style="margin: 20; font-weight: bold; text-align: center;">Oct 9 - 11</p>
+                                            <p style="margin: 20; text-align: center;">"54 is a 3-day event where students from different backgrounds come together to form teams and launch a successful startup. No experience required. Just bring yourself, some friends and good ideas."</p>
+	                                    </td>
+	                                </tr>
+	                            </table>
+	                        </th>
+	                        <!-- Column 2 : END -->
+	                        <!-- Column 3 : BEGIN -->
+	                        <th valign="top" width="33.33%" class="stack-column-center">
+	                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+	                                <tr>
+	                                    <td style="padding: 10px; text-align: center">
+	                                        <a href="http://founders.illinois.edu/Forge/"><img src="Images/forge.png" width="170" height="" alt="alt_text" border="0" style="width: 100%; max-width: 170px; height: auto; background: #FFFFFF; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;"></a>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+	                                    <td style="font-family: sans-serif; font-size: 15px; line-height: 20px; color: #b8b8b8; padding: 0 10px 10px; text-align: left;" class="center-on-narrow">
+                                            <p style="margin: 20; text-align: center; font-style: italic;">Forge | Chicago</p>
+                                            <p style="margin: 20; font-weight: bold; text-align: center;">Nov 7 - 8</p>
+                                            <p style="margin: 20; text-align: center;">"Forge is a 2-day conference to bring together the entrepreneurship communities across the Midwest. Over a weekend in Chicago, you'll meet other student entrepreneurs from all of the top schools in the region."</p>
+	                                    </td>
+	                                </tr>
+	                            </table>
+	                        </th>
+	                        <!-- Column 3 : END -->
+	                    </tr>
+	                </table>
+	            </td>
+	        </tr>
+	        <!-- 3 Photos Columns : END -->
+
+            <!-- Clear Spacer : BEGIN -->
+	        <tr>
+	            <td aria-hidden="true" height="50" style="font-size: 0px; line-height: 0px;">
+	                &nbsp;
+	            </td>
+	        </tr>
+            <!-- Clear Spacer : END -->
+		
+	    <!-- Full Bleed Background Section : BEGIN -->
+	    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fce0bd00;">
+	        <tr>
+	            <td>
+	                <div align="center" style="max-width: 600px; margin: auto;" class="email-container">
+	                    <!--[if mso]>
+	                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center">
+	                    <tr>
+	                    <td>
+	                    <![endif]-->
+	                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+	                        <tr>
+	                            <td style="padding: 20px; text-align: center; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff;">
+	                                <p style="margin: 0;"></p>
+	                            </td>
+	                        </tr>
+	                    </table>
+	                    <!--[if mso]>
+	                    </td>
+	                    </tr>
+	                    </table>
+	                    <![endif]-->
+	                </div>
+	            </td>
+	        </tr>
+	    </table>
+		<!-- Full Bleed Background Section : END -->
+
+		<!-- Social Media : BEGIN -->
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+			<tbody>
+			  <tr>
+				<td class="pc-sm-p-20 pc-xs-p-10" bgcolor="#1B1B1B" valign="top" style="padding: 25px 30px; background-color: #1B1B1B">
+				  <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+					<tbody>
+					  <tr>
+						<td align="center" valign="top" style="padding: 10px;">
+						  <a href="http://founders.illinois.edu/" style="text-decoration: none;"><img src="https://mcusercontent.com/61d1dc68f7de6828a17db2174/images/d0cea55c-e8f9-42cb-b8d2-853614ad485e.png" width="130" height="" alt="" style="height: auto; max-width: 100%; border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff; font-size: 14px;"></a>
+						</td>
+					  </tr>
+					  <tr>
+						<td align="center" valign="top">
+						  <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation">
+							<tbody>
+							  <tr>
+								<td valign="middle" style="padding: 10px;">
+								  <a href="https://www.facebook.com/illinoisfounders" style="text-decoration: none;"><img src="https://mcusercontent.com/61d1dc68f7de6828a17db2174/images/04d0a1ff-7536-455c-8160-c01fefa3bec1.png" width="30" height="30" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
+								</td>
+								<td valign="middle" style="padding: 10px;">
+								  <a href="https://www.instagram.com/illinoisfounders/" style="text-decoration: none;"><img src="https://github.com/Illinois-Founders/alumni-engagement/blob/master/Default%20Template/Images/igwhite.PNG?raw=true" width="30" height="30" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
+                                </td>
+                                <td valign="middle" style="padding: 10px;">
+                                    <a href="https://www.linkedin.com/company/founders-illinois-entrepreneurs/" style="text-decoration: none;"><img src="https://github.com/Illinois-Founders/alumni-engagement/blob/master/Default%20Template/Images/linkedinlogowhite.png?raw=true" width="30" height="30" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
+                                </td>
+							  </tr>
+							</tbody>
+						  </table>
+						</td>
+					  </tr>
+					</tbody>
+				  </table>
+				</td>
+			  </tr>
+			</tbody>
+		  </table>
+		<!-- Social Media : BEGIN -->
+
+		<!-- Email Footer : BEGIN -->
+			<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
+				<tr>
+					<td style="padding: 30px; font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #888888;">
+						<webversion style="color: #cccccc; text-decoration: underline; font-weight: bold;">View as a Web Page</webversion>
+						<br><br>
+						Copyright © 2020 Founders Illinois Entrepreneurs, All rights reserved.<br><span class="unstyle-auto-detected-links">Founder Illinois · University of Illinois at Urbana-Champaign · Champaign, IL 61822 · USA<br>team@founders.illinois.edu</span>
+						<br><br>
+						<unsubscribe style="color: #888888; text-decoration: underline;">unsubscribe</unsubscribe>
+					</td>
+				</tr>
+			</table>
+		<!-- Email Footer : END -->
+
+
+    <!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+    </center>
+</body>
+</html>
